@@ -4,9 +4,14 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score
+import numpy as np
 
 # Descargar datos
 nltk.download('movie_reviews')
+
+# Definir la semilla
+SEED = 60
+np.random.seed(SEED)
 
 # Preparar datos
 reviews = [(movie_reviews.raw(fileid), category)
@@ -20,7 +25,7 @@ labels_bin = [1 if label == 'pos' else 0 for label in labels]
 
 # Dividir datos en entrenamiento y prueba
 X_train, X_test, y_train, y_test = train_test_split(
-    texts, labels_bin, test_size=0.2, random_state=42)
+    texts, labels_bin, test_size=0.2, random_state=SEED)
 
 # Vectorización (Convertir textos en vectores numéricos)
 vectorizer = CountVectorizer(stop_words='english', max_features=5000)
